@@ -54,7 +54,7 @@ ZSH_CUSTOM=$HOME/.zsh_custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git celery chucknorris pip python vagrant tmux docker z zsh-syntax-highlighting pew)
+plugins=(git celery chucknorris pip python vagrant tmux docker z zsh-syntax-highlighting pew docker-compose)
 
 # User configuration
 
@@ -102,6 +102,7 @@ function tmuxkill() {
 autoload zmv
 
 # Alias' {{{
+if [ -e /usr/bin/vimx ]; then alias vim='/usr/bin/vimx'; fi
 alias vi="vim"
 alias r="source ~/.zshrc"
 alias tat='tmux new-session -As $(basename "$PWD" | tr . -)' # will attach if session exists, or create a new session
