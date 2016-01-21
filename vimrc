@@ -55,6 +55,9 @@ set tabstop=4
 " The number of spaces inserted for a tab (used for auto indenting)
 set shiftwidth=4
 
+" The number of spaces in tab when editing
+set softtabstop=4
+
 " Turn on line numbers
 set number
 
@@ -105,6 +108,10 @@ set lazyredraw
 
 " highlight a matching [{()}] when cursor is placed on start/end character
 set showmatch
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
 
 " Set built-in file system explorer to use layout similar to the NERDTree plugin
 let g:netrw_liststyle=3
@@ -274,7 +281,8 @@ autocmd BufWritePre * call StripTrailingWhitespace()
 " file formats
 autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
-autocmd FileType sh,cucumber,ruby,yaml,zsh,vim setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType sh,cucumber,ruby,yaml,zsh,vim,javascript,css,html setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent
 
 " specify syntax highlighting for specific files
 autocmd Bufread,BufNewFile *.spv set filetype=php
@@ -312,8 +320,8 @@ function! s:RunShellCommand(cmdline)
 endfunction
 
 " Close all folds when opening a new buffer
-autocmd BufRead * setlocal foldmethod=marker
-autocmd BufRead * normal zM
+"autocmd BufRead * setlocal foldmethod=marker
+"autocmd BufRead * normal zM
 
 " Rainbow parenthesis always on!
 if exists(':RainbowParenthesesToggle')
