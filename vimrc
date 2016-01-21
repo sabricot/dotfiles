@@ -58,6 +58,8 @@ set shiftwidth=4
 " The number of spaces in tab when editing
 set softtabstop=4
 
+"set autoindent
+
 " Turn on line numbers
 set number
 
@@ -281,8 +283,8 @@ autocmd BufWritePre * call StripTrailingWhitespace()
 " file formats
 autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
-autocmd FileType sh,cucumber,ruby,yaml,zsh,vim,javascript,css,html setlocal shiftwidth=2 tabstop=2 expandtab
-autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent
+autocmd FileType sh,cucumber,ruby,yaml,zsh,vim,javascript,css,html setlocal shiftwidth=2 tabstop=2
+autocmd FileType python setlocal textwidth=79
 
 " specify syntax highlighting for specific files
 autocmd Bufread,BufNewFile *.spv set filetype=php
@@ -318,10 +320,6 @@ function! s:RunShellCommand(cmdline)
   setlocal nomodifiable
   1
 endfunction
-
-" Close all folds when opening a new buffer
-"autocmd BufRead * setlocal foldmethod=marker
-"autocmd BufRead * normal zM
 
 " Rainbow parenthesis always on!
 if exists(':RainbowParenthesesToggle')
