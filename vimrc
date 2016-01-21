@@ -352,3 +352,5 @@ fun! SetDiffColors()
 endfun
 autocmd FilterWritePre * call SetDiffColors()
 " }}}
+
+" vim:foldmethod=marker:foldlevel=0
