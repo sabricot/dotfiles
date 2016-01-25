@@ -193,6 +193,15 @@ map <silent> e <Plug>CamelCaseMotion_e
 sunmap w
 sunmap b
 sunmap e
+
+let g:virtualenv_directory = '~/.local/share/virtualenvs/'
+
+" python3 support with hack for the has('python') and has('python3')
+let py_cmd = 'py'
+if system('python -c '.shellescape('import sys; sys.stdout.write(str(sys.version_info[0]))')) == '3'
+  let py_cmd = 'py3'
+endif
+execute py_cmd "import os"
 " }}}
 
 " Mappings {{{
