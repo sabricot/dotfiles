@@ -73,8 +73,9 @@ export GITHUB_USER="sabricot"
 export GREP_COLOR='1;32'
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
 export EDITOR="vim"
-export TERM="xterm-256color"
+[ -z "$TMUX" ] && export TERM="xterm-256color"
 export CLICOLOR=1
+
 
 # export PATH="/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/home/sabre/bin"
 export VAGRANT_DEFAULT_PROVIDER=virtualbox

@@ -1,7 +1,5 @@
 " Settings {{{
-" Switch syntax highlighting on, when the terminal has colors
 syntax on
-
 " Use vim, not vi api
 set nocompatible
 
@@ -128,7 +126,21 @@ set colorcolumn=80
 execute pathogen#infect()
 filetype plugin indent on " required by Pathogen Plugin Manager
 
+" Add backroung transparency
+function! AdaptColorscheme()
+    highlight Normal ctermbg=none
+    "highlight LineNr ctermbg=none
+    highlight Folded ctermbg=none
+    highlight NonText ctermbg=none
+    highlight SpecialKey ctermbg=none
+    "highlight VertSplit ctermbg=none
+    highlight SignColumn ctermbg=none
+endfunction
+autocm ColorScheme * call AdaptColorscheme()
+
 " Theme
+let base16colorspace=256
+set t_Co=256
 set background=dark
 colorscheme base16-eighties
 
@@ -194,6 +206,7 @@ sunmap w
 sunmap b
 sunmap e
 
+" vim-virtualenv
 let g:virtualenv_directory = '~/.local/share/virtualenvs/'
 
 " python3 support with hack for the has('python') and has('python3')
@@ -202,6 +215,13 @@ if system('python -c '.shellescape('import sys; sys.stdout.write(str(sys.version
   let py_cmd = 'py3'
 endif
 execute py_cmd "import os"
+
+" jedi
+let g:jedi#completions_command = "<C-Tab>"
+
+" supertab
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
 " }}}
 
 " Mappings {{{
@@ -219,7 +239,7 @@ execute py_cmd "import os"
 " to map something in just VISUAL mode use :vmap or :vnoremap
 
 " Clear search buffer
-:nnoremap § :nohlsearch<cr>
+nnoremap <leader><space> :nohlsearch<CR>
 
 " Command to use sudo when needed
 cmap w!! %!sudo tee > /dev/null %
