@@ -8,5 +8,6 @@
       ~/.vimrc: vimrc
       ~/.zshrc: zshrc
       ~/.zsh_custom: zsh_custom/
+      ~/.config/base16-shell: base16-shell/
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
