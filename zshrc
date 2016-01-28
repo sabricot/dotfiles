@@ -8,7 +8,7 @@ export ZSH=/home/sabre/.oh-my-zsh
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # PowerLevel9k promt custom config
-POWERLEVEL9K_VIRTUALENV_BACKGROUND='37'
+POWERLEVEL9K_VIRTUALENV_BACKGROUND='14'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
 
