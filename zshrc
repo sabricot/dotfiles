@@ -54,7 +54,7 @@ ZSH_CUSTOM=$HOME/.zsh_custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git celery chucknorris pip python vagrant tmux docker z zsh-syntax-highlighting pew docker-compose)
+plugins=(git celery chucknorris pip python vagrant tmux docker z zsh-syntax-highlighting pew docker-compose docker-machine)
 
 # User configuration
 
