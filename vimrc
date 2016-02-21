@@ -146,6 +146,7 @@ colorscheme base16-eighties
 
 " CtrlP
 map <leader>t <C-p>
+map <C-b> :CtrlPBuffer<cr>
 map <leader>y :CtrlPBuffer<cr>
 let g:ctrlp_show_hidden=1
 let g:ctrlp_working_path_mode=0
