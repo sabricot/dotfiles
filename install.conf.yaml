@@ -3,11 +3,12 @@
 - link:
       ~/.dotfiles: ''
       ~/.oh-my-zsh: oh-my-zsh/
+      ~/.zshrc: zshrc
+      ~/.zsh_custom: zsh_custom/
+      ~/.tmux: tmux/
       ~/.tmux.conf: tmux.conf
       ~/.vim: vim/
       ~/.vimrc: vimrc
-      ~/.zshrc: zshrc
-      ~/.zsh_custom: zsh_custom/
       ~/.config/base16-shell: base16-shell/
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
