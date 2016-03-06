@@ -11,8 +11,10 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_MODE='awesome-patched'
 POWERLEVEL9K_VIRTUALENV_BACKGROUND='14'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
-
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status docker_machine time)
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
