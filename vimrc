@@ -220,6 +220,12 @@ let g:jedi#completions_command = "<C-Tab>"
 " supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
+" syntastic
+let g:syntastic_error_symbol = '❌'
+let g:syntastic_style_warning_symbol = '💩'
+let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_error_symbol = '⁉️'
+
 " }}}
 
 " Mappings {{{
