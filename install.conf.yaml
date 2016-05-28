@@ -10,5 +10,6 @@
       ~/.vim: vim/
       ~/.vimrc: vimrc
       ~/.config/base16-shell: base16-shell/
+      ~/.config/dircolors-solarized: dircolors-solarized/
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

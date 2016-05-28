@@ -1,11 +1,9 @@
 #compdef pew
 
 _pew_list_venvs () {
-	local expl
-	local -a venvs
-
-    venvs=(${(f)"$(_call_program venvs pew-ls --long 2>/dev/null)"})
-    _wanted venvs expl 'virtual envs' compadd -a venvs
+  declare -a envs_cmd
+  envs_cmd=($(pew ls))
+  _describe 'envs' envs_cmd
 }
 
 
