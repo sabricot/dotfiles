@@ -109,9 +109,8 @@ set lazyredraw
 " highlight a matching [{()}] when cursor is placed on start/end character
 set showmatch
 
-" Enable folding
-set foldmethod=indent
-set foldlevel=99
+set foldlevel=0
+set foldcolumn=1
 
 " Set built-in file system explorer to use layout similar to the NERDTree plugin
 let g:netrw_liststyle=3
@@ -128,9 +127,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'chriskempson/base16-vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'davidhalter/jedi-vim'
+Plug 'valloric/youcompleteme'
 Plug 'scrooloose/nerdtree'
-Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-airline/vim-airline'
@@ -141,19 +139,8 @@ Plug 'jmcantrell/vim-virtualenv'
 Plug 'skammer/vim-css-color'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'bkad/CamelCaseMotion'
+Plug 'tpope/vim-surround'
 call plug#end()
-
-" Add backroung transparency
-function! AdaptColorscheme()
-    highlight Normal ctermbg=none
-    "highlight LineNr ctermbg=none
-    highlight Folded ctermbg=none
-    highlight NonText ctermbg=none
-    highlight SpecialKey ctermbg=none
-    "highlight VertSplit ctermbg=none
-    highlight SignColumn ctermbg=none
-endfunction
-autocm ColorScheme * call AdaptColorscheme()
 
 " Theme
 let base16colorspace=256
@@ -178,7 +165,10 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
 " CtrlP -> directories to ignore when fuzzy finding
-let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$',
+  \ 'file': '\v\.(pyc)$',
+  \ }
 
 " Airline (status line)
 let g:airline_powerline_fonts = 1
@@ -201,9 +191,11 @@ map <leader>' :NERDTreeToggle<cr>
 map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
 map <silent> e <Plug>CamelCaseMotion_e
+map <silent> ge <Plug>CamelCaseMotion_ge
 sunmap w
 sunmap b
 sunmap e
+sunmap ge
 
 " vim-virtualenv
 let g:virtualenv_directory = '~/.local/share/virtualenvs/'
@@ -215,12 +207,14 @@ if system('python -c '.shellescape('import sys; sys.stdout.write(str(sys.version
 endif
 execute py_cmd "import os"
 
-" jedi
-let g:jedi#completions_command = "<C-Tab>"
+" SimplyFold
+autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
+autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
 
-" supertab
-let g:SuperTabDefaultCompletionType = 'context'
-"
+" YouCompleteMe
+let g:ycm_autoclose_preview_window_after_insertion = 1
+nnoremap <leader>gt :YcmCompleter GoTo<CR>
+
 " syntastic
 let g:syntastic_error_symbol = '❌'
 let g:syntastic_style_warning_symbol = '💩'
@@ -333,36 +327,6 @@ autocmd InsertEnter * match TechWordsToAvoid /\cobviously\|basically\|simply\|of
 autocmd InsertLeave * match TechWordsToAvoid /\cobviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however,\|so,\|easy/
 autocmd BufWinLeave * call clearmatches()
 
-" Create a 'scratch buffer' which is a temporary buffer Vim wont ask to save
-" http://vim.wikia.com/wiki/Display_output_of_shell_commands_in_new_window
-command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
-function! s:RunShellCommand(cmdline)
-  echo a:cmdline
-  let expanded_cmdline = a:cmdline
-  for part in split(a:cmdline, ' ')
-    if part[0] =~ '\v[%#<]'
-      let expanded_part = fnameescape(expand(part))
-      let expanded_cmdline = substitute(expanded_cmdline, part, expanded_part, '')
-    endif
-  endfor
-  botright new
-  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
-  call setline(1, 'You entered:    ' . a:cmdline)
-  call setline(2, 'Expanded Form:  ' .expanded_cmdline)
-  call setline(3,substitute(getline(2),'.','=','g'))
-  execute '$read !'. expanded_cmdline
-  setlocal nomodifiable
-  1
-endfunction
-
-" Rainbow parenthesis always on!
-if exists(':RainbowParenthesesToggle')
-  autocmd VimEnter * RainbowParenthesesToggle
-  autocmd Syntax * RainbowParenthesesLoadRound
-  autocmd Syntax * RainbowParenthesesLoadSquare
-  autocmd Syntax * RainbowParenthesesLoadBraces
-endif
-
 " Reset spelling colours when reading a new buffer
 " This works around an issue where the colorscheme is changed by .local.vimrc
 fun! SetSpellingColors()
@@ -383,6 +347,7 @@ fun! SetDiffColors()
   highlight DiffText   cterm=bold ctermfg=white ctermbg=DarkRed
 endfun
 autocmd FilterWritePre * call SetDiffColors()
+
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
