@@ -57,7 +57,8 @@ ZSH_CUSTOM=$HOME/.zsh_custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git celery chucknorris pip python vagrant tmux docker z zsh-syntax-highlighting pew docker-compose docker-machine)
+plugins=(git git-flow celery chucknorris pip python vagrant tmux docker z zsh-syntax-highlighting pew docker-compose docker-machine heroku)
+
 
 # User configuration
 
@@ -83,6 +84,7 @@ export CLICOLOR=1
 # export PATH="/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/home/sabre/bin"
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 export VIRTUAL_ENV_DISABLE_PROMPT=False
+export PATH="/usr/local/heroku/bin:$PATH"
 
 # }}}
 

@@ -110,15 +110,14 @@ set lazyredraw
 set showmatch
 
 set foldlevel=0
-set foldcolumn=1
 
 " Set built-in file system explorer to use layout similar to the NERDTree plugin
 let g:netrw_liststyle=3
 
-" Always highlight column 80 so it's easier to see where
+" Always highlight column 99 so it's easier to see where
 " cutoff appears on longer screens
 autocmd BufWinEnter * highlight ColorColumn ctermbg=darkred
-set colorcolumn=80
+set colorcolumn=99
 " }}}
 
 " Plugins {{{
@@ -312,7 +311,7 @@ autocmd BufWritePre * call StripTrailingWhitespace()
 autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
 autocmd FileType sh,cucumber,ruby,yaml,zsh,vim,javascript,css,html setlocal shiftwidth=2 tabstop=2
-autocmd FileType python setlocal textwidth=79
+autocmd FileType python setlocal textwidth=99
 
 " specify syntax highlighting for specific files
 autocmd Bufread,BufNewFile *.spv set filetype=php
