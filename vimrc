@@ -139,6 +139,8 @@ Plug 'skammer/vim-css-color'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'bkad/CamelCaseMotion'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'idanarye/vim-merginal'
 call plug#end()
 
 " Theme
@@ -215,7 +217,6 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 nnoremap <leader>gt :YcmCompleter GoTo<CR>
 
 " syntastic
-let g:syntastic_error_symbol = '❌'
 let g:syntastic_style_warning_symbol = '💩'
 let g:syntastic_warning_symbol = '⚠️'
 let g:syntastic_style_error_symbol = '⁉️'
@@ -311,7 +312,7 @@ autocmd BufWritePre * call StripTrailingWhitespace()
 autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
 autocmd FileType sh,cucumber,ruby,yaml,zsh,vim,javascript,css,html setlocal shiftwidth=2 tabstop=2
-autocmd FileType python setlocal textwidth=99
+autocmd FileType python setlocal textwidth=79
 
 " specify syntax highlighting for specific files
 autocmd Bufread,BufNewFile *.spv set filetype=php
