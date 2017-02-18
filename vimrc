@@ -102,6 +102,7 @@ set visualbell
 
 " Visual autocomplete for command menu (e.g. :e ~/path/to/file)
 set wildmenu
+set wildmode=list:longest,list:full
 
 " redraw only when we need to (i.e. don't redraw when executing a macro)
 set lazyredraw
@@ -135,12 +136,15 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'sheerun/vim-polyglot'
 Plug 'jmcantrell/vim-virtualenv'
-Plug 'skammer/vim-css-color'
+Plug 'ap/vim-css-color'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'bkad/CamelCaseMotion'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'idanarye/vim-merginal'
+Plug 'Yggdroot/indentLine'
+Plug 'tpope/vim-commentary'
+Plug 'Glench/Vim-Jinja2-Syntax'
 call plug#end()
 
 " Theme
@@ -160,6 +164,7 @@ let g:ctrlp_arg_map = 1
 
 " CtrlP -> files matched are ignored when expanding wildcards
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
+set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 
 " CtrlP -> use Ag for searching instead of VimScript
 " (might not work with ctrlp_show_hidden and ctrlp_custom_ignore)
@@ -221,6 +226,11 @@ let g:syntastic_style_warning_symbol = '💩'
 let g:syntastic_warning_symbol = '⚠️'
 let g:syntastic_style_error_symbol = '⁉️'
 
+" IndentLine
+let g:indentLine_enabled = 1
+let g:indentLine_concealcursor = 0
+let g:indentLine_char = '┆'
+let g:indentLine_faster = 1
 " }}}
 
 " Mappings {{{
