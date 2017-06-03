@@ -164,7 +164,7 @@ let g:ctrlp_arg_map = 1
 
 " CtrlP -> files matched are ignored when expanding wildcards
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
+set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__,node_modules
 
 " CtrlP -> use Ag for searching instead of VimScript
 " (might not work with ctrlp_show_hidden and ctrlp_custom_ignore)
@@ -219,6 +219,7 @@ autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
 
 " YouCompleteMe
 let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_python_binary_path = 'python'
 nnoremap <leader>gt :YcmCompleter GoTo<CR>
 
 " syntastic
