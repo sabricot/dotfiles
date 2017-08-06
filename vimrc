@@ -129,8 +129,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'valloric/youcompleteme'
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
-Plug 'tmhedberg/SimpylFold'
+Plug 'w0rp/ale'
+Plug 'python-mode/python-mode'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
@@ -145,6 +145,8 @@ Plug 'idanarye/vim-merginal'
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-commentary'
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'fisadev/vim-isort'
+
 call plug#end()
 
 " Theme
@@ -213,25 +215,44 @@ if system('python -c '.shellescape('import sys; sys.stdout.write(str(sys.version
 endif
 execute py_cmd "import os"
 
-" SimplyFold
-autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
-autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
-
 " YouCompleteMe
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_python_binary_path = 'python'
 nnoremap <leader>gt :YcmCompleter GoTo<CR>
 
-" syntastic
-let g:syntastic_style_warning_symbol = '💩'
-let g:syntastic_warning_symbol = '⚠️'
-let g:syntastic_style_error_symbol = '⁉️'
+" ale
+let g:ale_sign_warning = '⚠️'
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_fixers = {
+\   'javascript': [
+\       'eslint',
+\   ],
+\   'python': [
+\       'Isort',
+\       'autopep8'
+\   ],
+\}
 
 " IndentLine
 let g:indentLine_enabled = 1
 let g:indentLine_concealcursor = 0
 let g:indentLine_char = '┆'
 let g:indentLine_faster = 1
+
+" Isort
+let g:vim_isort_python_version = 'python3'
+
+" Pymode
+let g:pymode_doc = 0
+let g:pymode_virtualenv = 0
+let g:pymode_lint = 0
+let g:pymode_rope = 0
+let g:pymode_rope_completion = 0
+
+
+
 " }}}
 
 " Mappings {{{
