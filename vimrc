@@ -130,7 +130,8 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'valloric/youcompleteme'
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
-Plug 'python-mode/python-mode'
+Plug 'Konfekt/FastFold'
+Plug 'tmhedberg/SimpylFold'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
@@ -146,6 +147,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-commentary'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'fisadev/vim-isort'
+Plug 'Vimjas/vim-python-pep8-indent'
 
 call plug#end()
 
@@ -189,7 +191,7 @@ let g:github_token = $GITHUB_TOKEN
 " Git gutter
 let g:gitgutter_enabled = 1
 let g:gitgutter_eager = 0
-let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 highlight clear SignColumn
 
 " Searching the file system
@@ -227,6 +229,7 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_fixers = {
 \   'javascript': [
+\       'standard',
 \       'eslint',
 \   ],
 \   'python': [
@@ -244,14 +247,8 @@ let g:indentLine_faster = 1
 " Isort
 let g:vim_isort_python_version = 'python3'
 
-" Pymode
-let g:pymode_doc = 0
-let g:pymode_virtualenv = 0
-let g:pymode_lint = 0
-let g:pymode_rope = 0
-let g:pymode_rope_completion = 0
-
-
+" python-pep-8-indent
+let g:python_pep8_indent_multiline_string = -1
 
 " }}}
 
