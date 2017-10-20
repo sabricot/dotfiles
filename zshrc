@@ -8,7 +8,7 @@ export ZSH=/home/sabre/.oh-my-zsh
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # PowerLevel9k promt custom config
-POWERLEVEL9K_MODE='awesome-patched'
+POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_VIRTUALENV_BACKGROUND='14'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status docker_machine time)
@@ -58,7 +58,9 @@ ZSH_CUSTOM=$HOME/.zsh_custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-flow celery chucknorris pip python vagrant tmux docker z zsh-syntax-highlighting pew docker-compose docker-machine heroku)
+plugins=(
+git git-flow celery chucknorris pip python vagrant tmux docker z
+zsh-syntax-highlighting pew docker-compose docker-machine heroku httpie)
 
 
 # User configuration
@@ -117,8 +119,8 @@ alias tmuxsrc="tmux source-file ~/.tmux.conf"
 alias tmuxkillall="tmux ls | cut -d : -f 1 | xargs -I {} tmux kill-session -t {}" # tmux kill all sessions
 alias ct="ctags -R --exclude=.git --exclude=node_modules"
 alias dotfiles="ls -a | grep '^\.' | grep --invert-match '\.DS_Store\|\.$'"
-alias mmv='noglob zmv -W'
-alias dokku='bash $HOME/.dokku/contrib/dokku_client.sh'
+alias mmv="noglob zmv -W"
+alias dokku="bash $HOME/.dokku/contrib/dokku_client.sh"
 
 # }}}
 # Base16 Shell

@@ -11,7 +11,7 @@ Misc configuration files from my $HOME directory ;) ...
   * zsh
   * tmux
   * editorconfig-core-py (for the vim editorconfig plugin, https://github.com/editorconfig/editorconfig-core-py)
-  * poweline-font
+  * sauce code nerd font
   * the_silver_searcher 
 
 ## Instalation
