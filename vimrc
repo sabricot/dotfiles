@@ -149,6 +149,7 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'fisadev/vim-isort'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'ryanoasis/vim-devicons'
+Plug 'vim-scripts/loremipsum'
 
 call plug#end()
 
