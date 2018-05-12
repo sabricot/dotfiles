@@ -60,7 +60,7 @@ ZSH_CUSTOM=$HOME/.zsh_custom
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 git git-flow celery chucknorris pip python vagrant tmux docker z
-zsh-syntax-highlighting pew docker-compose docker-machine heroku httpie)
+zsh-syntax-highlighting pew docker-compose docker-machine heroku httpie aws)
 
 
 # User configuration
