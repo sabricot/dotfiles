@@ -152,15 +152,18 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/loremipsum'
 Plug 'rust-lang/rust.vim'
 Plug 'wagnerf42/vim-clippy'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " Autocomplete via LSP
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'yami-beta/asyncomplete-omni.vim'
 Plug 'prabirshrestha/asyncomplete-file.vim'
 Plug 'prabirshrestha/asyncomplete-buffer.vim'
+Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+
 
 call plug#end()
 
@@ -231,13 +234,12 @@ if system('python -c '.shellescape('import sys; sys.stdout.write(str(sys.version
 endif
 execute py_cmd "import os"
 
-" YouCompleteMe
-" let g:ycm_autoclose_preview_window_after_insertion = 1
-" let g:ycm_python_binary_path = 'python'
-" nnoremap <leader>gt :YcmCompleter GoTo<CR>
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<c-e>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 
 " LSP (for, completion, goto, rename...) {{{
-
 let g:asyncomplete_remove_duplicates = 1
 
 " close preview window when completion is done.
@@ -267,12 +269,12 @@ if executable('pyls')
         \ })
 endif
 
-au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
-  \ 'name': 'omni',
-  \ 'whitelist': ['*'],
-  \ 'blacklist': ['c', 'cpp', 'html'],
-  \ 'completor': function('asyncomplete#sources#omni#completor')
-  \  }))
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+    \ 'name': 'buffer',
+    \ 'whitelist': ['*'],
+    \ 'blacklist': ['go'],
+    \ 'completor': function('asyncomplete#sources#buffer#completor'),
+    \ }))
 
 au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
   \ 'name': 'file',
@@ -281,12 +283,13 @@ au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#source
   \ 'completor': function('asyncomplete#sources#file#completor')
   \ }))
 
-" au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-"     \ 'name': 'buffer',
-"     \ 'whitelist': ['*'],
-"     \ 'blacklist': ['go'],
-"     \ 'completor': function('asyncomplete#sources#buffer#completor'),
-"     \ }))
+if has('python3')
+    call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+        \ 'name': 'ultisnips',
+        \ 'whitelist': ['*'],
+        \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
+        \ }))
+endif
 
 " }}}
 
