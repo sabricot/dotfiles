@@ -127,7 +127,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'chriskempson/base16-vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'valloric/youcompleteme'
+" Plug 'valloric/youcompleteme'
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug 'Konfekt/FastFold'
@@ -150,6 +150,17 @@ Plug 'fisadev/vim-isort'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/loremipsum'
+Plug 'rust-lang/rust.vim'
+Plug 'wagnerf42/vim-clippy'
+
+" Autocomplete via LSP
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'yami-beta/asyncomplete-omni.vim'
+Plug 'prabirshrestha/asyncomplete-file.vim'
+Plug 'prabirshrestha/asyncomplete-buffer.vim'
 
 call plug#end()
 
@@ -185,6 +196,7 @@ let g:ctrlp_custom_ignore = {
 " Airline (status line)
 let g:airline_powerline_fonts = 1
 let g:airline_theme='base16'
+let g:airline#extensions#ale#enabled = 1
 
 " Git authorisation settings
 let g:github_user = $GITHUB_USER
@@ -220,24 +232,86 @@ endif
 execute py_cmd "import os"
 
 " YouCompleteMe
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_python_binary_path = 'python'
-nnoremap <leader>gt :YcmCompleter GoTo<CR>
+" let g:ycm_autoclose_preview_window_after_insertion = 1
+" let g:ycm_python_binary_path = 'python'
+" nnoremap <leader>gt :YcmCompleter GoTo<CR>
 
-" ale
+" LSP (for, completion, goto, rename...) {{{
+
+let g:asyncomplete_remove_duplicates = 1
+
+" close preview window when completion is done.
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" Enable tab completion
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+
+nnoremap <leader>gt :LspDefinition<CR>
+nnoremap <leader>gr :LspRename<CR>
+
+if executable('rls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+        \ 'whitelist': ['rust'],
+        \ })
+endif
+
+if executable('pyls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
+        \ })
+endif
+
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
+  \ 'name': 'omni',
+  \ 'whitelist': ['*'],
+  \ 'blacklist': ['c', 'cpp', 'html'],
+  \ 'completor': function('asyncomplete#sources#omni#completor')
+  \  }))
+
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+  \ 'name': 'file',
+  \ 'whitelist': ['*'],
+  \ 'priority': 10,
+  \ 'completor': function('asyncomplete#sources#file#completor')
+  \ }))
+
+" au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+"     \ 'name': 'buffer',
+"     \ 'whitelist': ['*'],
+"     \ 'blacklist': ['go'],
+"     \ 'completor': function('asyncomplete#sources#buffer#completor'),
+"     \ }))
+
+" }}}
+
+" ALE
 let g:ale_sign_warning = '⚠️'
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_fixers = {
-\   'javascript': [
-\       'standard',
-\       'eslint',
-\   ],
-\   'python': [
-\       'Isort',
-\       'autopep8'
-\   ],
+\ 'javascript': [
+\   'standard',
+\   'eslint',
+\ ],
+\ 'python': [
+\   'isort',
+\   'yapf'
+\ ],
+\ 'rust': [
+\   'rustfmt',
+\ ],
+\}
+nnoremap <leader>gf :ALEFix<CR>
+
+let g:ale_linters = {
+\ 'rust': ['rls', 'cargo'],
 \}
 
 " IndentLine
@@ -296,28 +370,6 @@ map <leader>w[ <C-W>= " equalize all windows
 " Make splitting Vim windows easier
 map <leader>; <C-W>s
 map <leader>` <C-W>v
-
-" Running Tests...
-" See also <https://gist.github.com/8114940>
-
-" Run currently open RSpec test file
-map <Leader>rf :w<cr>:!rspec % --format nested<cr>
-
-" Run current RSpec test
-" RSpec is clever enough to work out the test to run if the cursor is on any line within the test
-map <Leader>rl :w<cr>:exe "!rspec %" . ":" . line(".")<cr>
-
-" Run all RSpec tests
-map <Leader>rt :w<cr>:!rspec --format nested<cr>
-
-" Run currently open cucumber feature file
-map <Leader>cf :w<cr>:!cucumber %<cr>
-
-" Run current cucumber scenario
-map <Leader>cl :w<cr>:exe "!cucumber %" . ":" . line(".")<cr>
-
-" Run all cucumber feature files
-map <Leader>ct :w<cr>:!cucumber<cr>
 
 " Tmux style window selection
 map <Leader>ws :ChooseWin<cr>
@@ -378,7 +430,5 @@ fun! SetDiffColors()
   highlight DiffText   cterm=bold ctermfg=white ctermbg=DarkRed
 endfun
 autocmd FilterWritePre * call SetDiffColors()
-
-" }}}
 
 " vim:foldmethod=marker:foldlevel=0
