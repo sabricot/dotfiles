@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/home/sabre/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -75,7 +75,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 # Exports {{{
-export DEFAULT_USER=sabre
+export DEFAULT_USER=joe
 export GITHUB_USER="sabricot"
 export GREP_COLOR='1;32'
 export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
@@ -129,5 +129,4 @@ BASE16_SHELL="$HOME/.config/base16-shell/base16-eighties.dark.sh"
 
 eval `dircolors ~/.config/dircolors-solarized/dircolors.ansi-dark`
 
-export NVM_DIR="/home/sabre/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+source /usr/share/nvm/init-nvm.sh
