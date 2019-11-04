@@ -150,6 +150,7 @@ Plug 'fisadev/vim-isort'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/loremipsum'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 call plug#end()
 
@@ -223,22 +224,31 @@ execute py_cmd "import os"
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_python_binary_path = 'python'
 nnoremap <leader>gt :YcmCompleter GoTo<CR>
+nnoremap <leader>gd :YcmCompleter GetDoc<CR>
 
 " ale
 let g:ale_sign_warning = '⚠️'
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_linters = {'rust': ['rls']}
 let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': [
 \       'standard',
 \       'eslint',
+\       'prettier',
 \   ],
 \   'python': [
-\       'Isort',
+\       'black',
 \       'autopep8'
 \   ],
+\   'rust': [
+\       'rustfmt',
+\   ],
 \}
+
+let g:ale_fix_on_save = 1
 
 " IndentLine
 let g:indentLine_enabled = 1
@@ -329,15 +339,6 @@ autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal g`\"" |
   \ endif
-
-fun! StripTrailingWhitespace()
-  " don't strip on these filetypes
-  if &ft =~ 'markdown'
-    return
-  endif
-  %s/\s\+$//e
-endfun
-autocmd BufWritePre * call StripTrailingWhitespace()
 
 " file formats
 autocmd Filetype gitcommit setlocal spell textwidth=72
