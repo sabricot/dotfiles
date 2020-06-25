@@ -151,6 +151,7 @@ Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/loremipsum'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
@@ -169,19 +170,12 @@ let g:ctrlp_max_height=30
 " CtrlP -> override <C-o> to provide options for how to open files
 let g:ctrlp_arg_map = 1
 
-" CtrlP -> files matched are ignored when expanding wildcards
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__,node_modules
+set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__,node_modules,
 
 " CtrlP -> use Ag for searching instead of VimScript
 " (might not work with ctrlp_show_hidden and ctrlp_custom_ignore)
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-" CtrlP -> directories to ignore when fuzzy finding
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$',
-  \ 'file': '\v\.(pyc)$',
-  \ }
 
 " Airline (status line)
 let g:airline_powerline_fonts = 1
@@ -209,6 +203,9 @@ sunmap w
 sunmap b
 sunmap e
 sunmap ge
+
+" vim-rust
+let g:rust_fold = 1
 
 " vim-virtualenv
 let g:virtualenv_directory = '~/.local/share/virtualenvs/'
