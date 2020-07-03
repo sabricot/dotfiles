@@ -8,7 +8,6 @@ set nobackup
 
 " No write backup
 set nowritebackup
-
 " No swap file
 set noswapfile
 
@@ -32,6 +31,8 @@ set smartcase
 
 " Make sure any searches /searchPhrase doesn't need the \c escape character
 set ignorecase
+
+set updatetime=300
 
 " A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
 " if you try and quit Vim while there are hidden buffers, you will raise an error:
@@ -127,9 +128,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'chriskempson/base16-vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'valloric/youcompleteme'
 Plug 'scrooloose/nerdtree'
-Plug 'w0rp/ale'
 Plug 'Konfekt/FastFold'
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-airline/vim-airline'
@@ -137,7 +136,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'sheerun/vim-polyglot'
 Plug 'jmcantrell/vim-virtualenv'
-Plug 'ap/vim-css-color'
+" Plug 'ap/vim-css-color'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'bkad/CamelCaseMotion'
 Plug 'tpope/vim-surround'
@@ -152,6 +151,26 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/loremipsum'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'rust-lang/rust.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Specific coc extensions
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-pairs', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/vim-jsx-improve', {'do': 'yarn install --frozen-lockfile'}
+Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
+Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile'}
+Plug 'fannheyward/coc-rust-analyzer', {'do': 'yarn install --frozen-lockfile'}
 
 call plug#end()
 
@@ -210,42 +229,58 @@ let g:rust_fold = 1
 " vim-virtualenv
 let g:virtualenv_directory = '~/.local/share/virtualenvs/'
 
-" python3 support with hack for the has('python') and has('python3')
-let py_cmd = 'py'
-if system('python -c '.shellescape('import sys; sys.stdout.write(str(sys.version_info[0]))')) == '3'
-  let py_cmd = 'py3'
+" coc
+let g:coc_node_path = '/usr/bin/node'
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <S-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
-execute py_cmd "import os"
 
-" YouCompleteMe
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_python_binary_path = 'python'
-nnoremap <leader>gt :YcmCompleter GoTo<CR>
-nnoremap <leader>gd :YcmCompleter GetDoc<CR>
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
-" ale
-let g:ale_sign_warning = '⚠️'
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:ale_linters = {'rust': ['rls']}
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': [
-\       'standard',
-\       'eslint',
-\       'prettier',
-\   ],
-\   'python': [
-\       'black',
-\       'autopep8'
-\   ],
-\   'rust': [
-\       'rustfmt',
-\   ],
-\}
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-let g:ale_fix_on_save = 1
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" highlight error in red
+highlight CocErrorHighlight ctermfg=Red  guifg=#ff0000
+
+" highlight error in red
+highlight CocWarningHighlight ctermfg=Red  guifg=#ff0000
 
 " IndentLine
 let g:indentLine_enabled = 1
@@ -304,28 +339,6 @@ map <leader>w[ <C-W>= " equalize all windows
 map <leader>; <C-W>s
 map <leader>` <C-W>v
 
-" Running Tests...
-" See also <https://gist.github.com/8114940>
-
-" Run currently open RSpec test file
-map <Leader>rf :w<cr>:!rspec % --format nested<cr>
-
-" Run current RSpec test
-" RSpec is clever enough to work out the test to run if the cursor is on any line within the test
-map <Leader>rl :w<cr>:exe "!rspec %" . ":" . line(".")<cr>
-
-" Run all RSpec tests
-map <Leader>rt :w<cr>:!rspec --format nested<cr>
-
-" Run currently open cucumber feature file
-map <Leader>cf :w<cr>:!cucumber %<cr>
-
-" Run current cucumber scenario
-map <Leader>cl :w<cr>:exe "!cucumber %" . ":" . line(".")<cr>
-
-" Run all cucumber feature files
-map <Leader>ct :w<cr>:!cucumber<cr>
-
 " Tmux style window selection
 map <Leader>ws :ChooseWin<cr>
 " }}}
@@ -347,27 +360,6 @@ autocmd FileType python setlocal textwidth=79
 autocmd Bufread,BufNewFile *.spv set filetype=php
 autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
 
-" Highlight words to avoid in tech writing
-" http://css-tricks.com/words-avoid-educational-writing/
-highlight TechWordsToAvoid ctermbg=red ctermfg=white
-match TechWordsToAvoid /\cobviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however\|so,\|easy/
-autocmd BufWinEnter * match TechWordsToAvoid /\cobviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however,\|so,\|easy/
-autocmd InsertEnter * match TechWordsToAvoid /\cobviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however,\|so,\|easy/
-autocmd InsertLeave * match TechWordsToAvoid /\cobviously\|basically\|simply\|of\scourse\|clearly\|just\|everyone\sknows\|however,\|so,\|easy/
-autocmd BufWinLeave * call clearmatches()
-
-" Reset spelling colours when reading a new buffer
-" This works around an issue where the colorscheme is changed by .local.vimrc
-fun! SetSpellingColors()
-  highlight SpellBad cterm=bold ctermfg=white ctermbg=red
-  highlight SpellCap cterm=bold ctermfg=red ctermbg=white
-endfun
-autocmd BufWinEnter * call SetSpellingColors()
-autocmd BufNewFile * call SetSpellingColors()
-autocmd BufRead * call SetSpellingColors()
-autocmd InsertEnter * call SetSpellingColors()
-autocmd InsertLeave * call SetSpellingColors()
-
 " Change colourscheme when diffing
 fun! SetDiffColors()
   highlight DiffAdd    cterm=bold ctermfg=white ctermbg=DarkGreen
@@ -379,4 +371,3 @@ autocmd FilterWritePre * call SetDiffColors()
 
 " }}}
 
-" vim:foldmethod=marker:foldlevel=0

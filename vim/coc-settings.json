@@ -1,0 +1,5 @@
+{
+    "tsserver.npm": "/usr/bin/npm",
+    "rust-analyzer.serverPath": "/usr/bin/rust-analyzer",
+    "coc.preferences.colorSupport": true
+}
