@@ -277,10 +277,10 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " highlight error in red
-highlight CocErrorHighlight ctermfg=Red  guifg=#ff0000
+highlight CocErrorHighlight ctermbg=Red  ctermfg=White
 
 " highlight error in red
-highlight CocWarningHighlight ctermfg=Red  guifg=#ff0000
+highlight CocWarningHighlight ctermbg=White  ctermfg=Red
 
 " IndentLine
 let g:indentLine_enabled = 1

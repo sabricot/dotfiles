@@ -129,3 +129,6 @@ BASE16_SHELL="$HOME/.config/base16-shell/base16-eighties.dark.sh"
 eval `dircolors ~/.config/dircolors-solarized/dircolors.ansi-dark`
 
 source /usr/share/nvm/init-nvm.sh
+
+# added by Pew
+source "$(pew shell_config)"
