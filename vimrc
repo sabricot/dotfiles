@@ -212,7 +212,7 @@ set signcolumn=yes
 highlight clear SignColumn
 
 " Searching the file system
-map <leader>' :NERDTreeToggle<cr>
+map <leader>f :NERDTreeToggle<cr>
 
 " Camel Case Motion (for dealing with programming code)
 map <silent> w <Plug>CamelCaseMotion_w
@@ -248,7 +248,10 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <S-space> coc#refresh()
+inoremap <silent><expr> <c-@> coc#refresh()
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
