@@ -1,0 +1,4 @@
+tmux/plugins
+tmux/resurrect
+vim/sessions
+vim/plugged
