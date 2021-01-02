@@ -200,6 +200,8 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='base16'
 let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#virtualenv#enabled = 0
+let g:airline#extensions#coc#enabled = 0
 
 " Git authorisation settings
 let g:github_user = $GITHUB_USER
