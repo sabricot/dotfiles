@@ -8,6 +8,7 @@
       ~/.tmux: tmux/
       ~/.tmux.conf: tmux.conf
       ~/.vim: vim/
+      ~/.vim/coc-settings.json: vim/coc-settings.json
       ~/.vimrc: vimrc
       ~/.config/base16-shell: base16-shell/
       ~/.config/dircolors-solarized: dircolors-solarized/
