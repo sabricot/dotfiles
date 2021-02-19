@@ -145,8 +145,6 @@ Plug 'idanarye/vim-merginal'
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-commentary'
 Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'fisadev/vim-isort'
-Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/loremipsum'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
@@ -155,7 +153,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Specific coc extensions
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
@@ -293,12 +291,6 @@ let g:indentLine_enabled = 1
 let g:indentLine_concealcursor = 0
 let g:indentLine_char = '┆'
 let g:indentLine_faster = 1
-
-" Isort
-let g:vim_isort_python_version = 'python3'
-
-" python-pep-8-indent
-let g:python_pep8_indent_multiline_string = -1
 
 " }}}
 
